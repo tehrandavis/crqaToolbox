@@ -12,8 +12,8 @@ find_embed <- function(fnn_ts1, fnn_ts2, fnnpercent){
   
   # get first local minimum:
   fnn_diffs1 <- diff(fnnfraction1)
-  end_fnn1 <- min(which(fnn_diffs1>0))-1
-  fnnfraction1 <- fnnfraction1[1:end_fnn1]
+  end_fnn1 <- min(which(fnn_diffs1>0))-1 
+  fnnfraction1 <- fnnfraction1[1:end_fnn1] # ensure that this is monotonic decrease
   
   emdthd1 = fnnfraction1[1]/fnnpercent
   emdix1 = which(diff(fnnfraction1) < -emdthd1)
@@ -21,6 +21,10 @@ find_embed <- function(fnn_ts1, fnn_ts2, fnnpercent){
     emdmints1 = as.numeric(emdix1) + 1
   } else if (length(emdix1) > 1) {
     emdmints1 = as.numeric(tail(emdix1, 1) + 1)
+    emdmints1_2out = emdmints1 + 2
+    emdmints1_2diff <- fnnfraction1[emdmints1]-fnnfraction1[emdmints1_2out]
+    emdmints1_2diff_num <- ifelse(is.na(emdmints1_2diff),0,emdmints1_2diff)
+    emdmints1 <- ifelse(emdmints1_2diff_num>emdthd1,emdmints1_2out,emdmints1)
   } else {
     emdmints1 = 1
   }
@@ -32,14 +36,19 @@ find_embed <- function(fnn_ts1, fnn_ts2, fnnpercent){
   # get first local minimum:
   fnn_diffs2 <- diff(fnnfraction2)
   end_fnn2 <- min(which(fnn_diffs2>0))-1
-  fnnfraction2 <- fnnfraction1[2:end_fnn]
+  fnnfraction2 <- fnnfraction1[2:end_fnn2]
   
   emdthd2 = fnnfraction2[1]/fnnpercent
   emdix2 = which(diff(fnnfraction2) < -emdthd2)
+  
   if (length(emdix2) == 1) {
     emdmints2 = as.numeric(emdix2) + 1
   } else if (length(emdix2) > 1) {
     emdmints2 = as.numeric(tail(emdix2, 1) + 1)
+    emdmints2_2out = emdmints2 + 2
+    emdmints2_2diff <- fnnfraction2[emdmints2]-fnnfraction2[emdmints2_2out]
+    emdmints2_2diff_num <- ifelse(is.na(emdmints2_2diff),0,emdmints2_2diff)
+    emdmints2 <- ifelse(emdmints2_2diff_num>emdthd2,emdmints2_2out,emdmints2)
   } else {
     emdmints2 = 1
   }
