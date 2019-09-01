@@ -5,8 +5,11 @@
 #     - timeseries data for each ts in tibble form [time, position]
 #     - crqa() output
 
+
+# example workflow:
+
 # required packages
-library(crqa) # run crqa
+library(crqa) # executes crqa
 library(dplyr) # data wrangling (tidyverse)
 library(ggplot2) # plotting
 library(ggpubr) # adding border around plot
