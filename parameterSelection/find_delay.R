@@ -5,8 +5,9 @@ find_delay <- function(ts1, ts2, max.delay, typeami){
   
   m1 = min(mi1)
   m2 = min(mi2)
-  m12 = min(mi)
-  mis = c(m1, m2, m12)
+  #m12 = min(mi)
+  #mis = c(m1, m2, m12)
+  mis = c(m1, m2)
   
   if (typeami == "mindip") {
     minmi = which(mis == min(mis))
@@ -14,15 +15,16 @@ find_delay <- function(ts1, ts2, max.delay, typeami){
       lag = which(mi1 == m1)
     if (minmi == 2) 
       lag = which(mi2 == m2)
-    if (minmi == 3) 
-      lag = which(mi == m12)
+    #if (minmi == 3) 
+      #lag = which(mi == m12)
     maxlag = lag
   }
   if (typeami == "maxlag") {
     lg1 = which(mi1 == m1)
     lg2 = which(mi2 == m2)
-    lg12 = which(mi == m12)
-    lags = c(lg1, lg2, lg12)
+    #lg12 = which(mi == m12)
+    #lags = c(lg1, lg2, lg12)
+    lags = c(lg1, lg2)
     maxlag = lags[which(lags == max(lags))]
   }
   if (length(maxlag) > 1) {
@@ -33,9 +35,9 @@ find_delay <- function(ts1, ts2, max.delay, typeami){
   # diagnostic plot for DELAY----
   mi1 <- mi1[1:max.delay]
   mi2 <- mi2[1:max.delay]
-  mi <- mi[1:max.delay]
+  #mi <- mi[1:max.delay]
   
-  mutual_info_data_table <- tibble(mi,mi1,mi2,"lag"=seq_along(mi))
+  mutual_info_data_table <- tibble(mi1,mi2,"lag"=seq_along(mi))
   mutual_info_data_table <- tidyr::gather(mutual_info_data_table, 
                                           key="timeseries", value="mutual_info", -lag)
   
