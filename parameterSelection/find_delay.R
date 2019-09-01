@@ -1,10 +1,12 @@
-find_delay <- function(ts1, ts2, max.delay, typeami){
-  mi1 = as.numeric(mutual(ts1, lag.max = max.delay, plot = FALSE))
-  mi2 = as.numeric(mutual(ts2, lag.max = max.delay, plot = FALSE))
-  mi = ami(ts1, ts2, 1:max.delay)
+library(peakPick)
+
+find_delay <- function(ts1, ts2, max.delay, typeami, peak.limit = 10){
+  mi1 = as.numeric(mutual(ts1, lag.max = max.delay, plot = FALSE)) %>% peakPick::peakpick(neighlim = peak.limit)
+  mi2 = as.numeric(mutual(ts2, lag.max = max.delay, plot = FALSE)) %>% peakPick::peakpick(neighlim = peak.limit)
+  # mi = ami(ts1, ts2, 1:max.delay)
   
-  m1 = min(mi1)
-  m2 = min(mi2)
+  m1 = min(which(mi1==TRUE))
+  m2 = min(which(mi2==TRUE))
   #m12 = min(mi)
   #mis = c(m1, m2, m12)
   mis = c(m1, m2)
@@ -12,16 +14,16 @@ find_delay <- function(ts1, ts2, max.delay, typeami){
   if (typeami == "mindip") {
     minmi = which(mis == min(mis))
     if (minmi == 1) 
-      lag = which(mi1 == m1)
+      lag = mis[1]
     if (minmi == 2) 
-      lag = which(mi2 == m2)
+      lag = mis[2]
     #if (minmi == 3) 
       #lag = which(mi == m12)
     maxlag = lag
   }
   if (typeami == "maxlag") {
-    lg1 = which(mi1 == m1)
-    lg2 = which(mi2 == m2)
+    lg1 = m1
+    lg2 = m2
     #lg12 = which(mi == m12)
     #lags = c(lg1, lg2, lg12)
     lags = c(lg1, lg2)
