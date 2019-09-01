@@ -1,7 +1,11 @@
-find_embed <- function(ts1,ts2, max.embed, delay, fnnpercent = 10){
+# takes output from tseriesChaos::false.nearest()
+# fnn_ts1 <- false.nearest(series, m, d, t, rt=10, eps=sd(series)/10)
+
+find_embed <- function(fnn_ts1, fnn_ts2, fnnpercent){
   # FNN calculation ----
-  embdts1 = false.nearest(ts1, m = max.embed, d = delay, t = 0, rt = 10, # as of 1.0.8 `Coco's crqa has error here, d=1`
-                          eps = sd(ts1)/10)
+  embdts1 = fnn_ts1
+  embdts2 = fnn_ts2
+  
   fnnfraction1 = embdts1[1, ]
   fnnfraction1 = fnnfraction1[which(is.na(fnnfraction1) == 
                                       FALSE)]

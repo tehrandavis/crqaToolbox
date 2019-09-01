@@ -30,7 +30,7 @@ whiteline = FALSE
 recpt = FALSE
 
 # set search scope parameters
-max.embed = 15
+max.embed = 10
 max.delay = 60
 steps = seq(1, 6, 1)
 radiusspan = 200 
@@ -38,11 +38,19 @@ radiussample = 80
 fnnpercent = 10
 typeami = "mindip"
 
-
+# calculate delay
 delay_data <- find_delay(ts1, ts2, max.delay,typeami)
 
-embed_data <- find_embed(ts1,ts2, max.embed, delay_data$delay)
+# calculate FNN
+ffn_ts1 <- tseriesChaos::false.nearest(series = ts1, m = max.embed, d = delay_data$delay, 
+                                       t = 0,rt = 10, eps = sd(ts1)/10)
 
+ffn_ts2 <- tseriesChaos::false.nearest(series = ts2, m = max.embed, d = delay_data$delay, 
+                                       t = 0,rt = 10, eps = sd(ts2)/10)
+
+embed_data <- find_embed(ffn_ts1,ffn_ts2, fnnpercent)
+
+# calculate readius
 radius_data <- find_radius(ts1,ts2, min.rec,max.rec,
                            embed = embed_data$embed,
                            delay = delay_data$delay,
