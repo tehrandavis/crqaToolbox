@@ -39,7 +39,7 @@ find_delay <- function(ts1, ts2, max.delay, typeami, peak.limit = 10){
   mi2 <- mi2[1:max.delay]
   #mi <- mi[1:max.delay]
   
-  mutual_info_data_table <- tibble(mi1,mi2,"lag"=seq_along(mi))
+  mutual_info_data_table <- tibble(mi1,mi2,"lag"=seq_along(mi1))
   mutual_info_data_table <- tidyr::gather(mutual_info_data_table, 
                                           key="timeseries", value="mutual_info", -lag)
   
