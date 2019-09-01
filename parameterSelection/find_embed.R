@@ -9,6 +9,12 @@ find_embed <- function(fnn_ts1, fnn_ts2, fnnpercent){
   fnnfraction1 = embdts1[1, ]
   fnnfraction1 = fnnfraction1[which(is.na(fnnfraction1) == 
                                       FALSE)]
+  
+  # get first local minimum:
+  fnn_diffs1 <- diff(fnnfraction1)
+  end_fnn1 <- min(which(fnn_diffs1>0))-1
+  fnnfraction1 <- fnnfraction1[1:end_fnn1]
+  
   emdthd1 = fnnfraction1[1]/fnnpercent
   emdix1 = which(diff(fnnfraction1) < -emdthd1)
   if (length(emdix1) == 1) {
@@ -22,6 +28,12 @@ find_embed <- function(fnn_ts1, fnn_ts2, fnnpercent){
   fnnfraction2 = embdts2[1, ]
   fnnfraction2 = fnnfraction2[which(is.na(fnnfraction2) == 
                                       FALSE)]
+  
+  # get first local minimum:
+  fnn_diffs2 <- diff(fnnfraction2)
+  end_fnn2 <- min(which(fnn_diffs2>0))-1
+  fnnfraction2 <- fnnfraction1[2:end_fnn]
+  
   emdthd2 = fnnfraction2[1]/fnnpercent
   emdix2 = which(diff(fnnfraction2) < -emdthd2)
   if (length(emdix2) == 1) {
