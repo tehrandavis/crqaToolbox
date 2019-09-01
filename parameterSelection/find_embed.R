@@ -1,7 +1,7 @@
 # takes output from tseriesChaos::false.nearest()
 # fnn_ts1 <- false.nearest(series, m, d, t, rt=10, eps=sd(series)/10)
 
-find_embed <- function(fnn_ts1, fnn_ts2, delay, fnnpercent){
+find_embed <- function(fnn_ts1, fnn_ts2, fnnpercent){
   # FNN calculation ----
   embdts1 = fnn_ts1
   embdts2 = fnn_ts2
@@ -18,8 +18,7 @@ find_embed <- function(fnn_ts1, fnn_ts2, delay, fnnpercent){
   } else {
     emdmints1 = 1
   }
-  embdts2 = false.nearest(ts2, m = max.embed, d = delay, t = 0, rt = 10, 
-                          eps = sd(ts2)/10)
+
   fnnfraction2 = embdts2[1, ]
   fnnfraction2 = fnnfraction2[which(is.na(fnnfraction2) == 
                                       FALSE)]
