@@ -50,7 +50,7 @@ ffn_ts2 <- tseriesChaos::false.nearest(series = ts2, m = max.embed, d = delay_da
 
 embed_data <- find_embed(ffn_ts1,ffn_ts2, fnnpercent)
 
-# calculate readius
+# calculate radius
 radius_data <- find_radius(ts1,ts2, min.rec,max.rec,
                            embed = embed_data$embed,
                            delay = delay_data$delay,
