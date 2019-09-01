@@ -14,7 +14,7 @@ find_embed <- function(ts1,ts2, max.embed, delay, fnnpercent = 10){
   } else {
     emdmints1 = 1
   }
-  embdts2 = false.nearest(ts2, m = max.embed, d = del, t = 0, rt = 10, 
+  embdts2 = false.nearest(ts2, m = max.embed, d = delay, t = 0, rt = 10, 
                           eps = sd(ts2)/10)
   fnnfraction2 = embdts2[1, ]
   fnnfraction2 = fnnfraction2[which(is.na(fnnfraction2) == 
