@@ -1,14 +1,16 @@
-library(peakPick)
+library(splus2R)
 
-find_delay <- function(ts1, ts2, max.delay, typeami, peak.limit = 10){
-  mi1 = as.numeric(mutual(ts1, lag.max = max.delay, plot = FALSE)) %>% peakPick::peakpick(neighlim = peak.limit)
-  mi2 = as.numeric(mutual(ts2, lag.max = max.delay, plot = FALSE)) %>% peakPick::peakpick(neighlim = peak.limit)
+find_delay <- function(ts1, ts2, max.delay, typeami, peak.limit = 5){
+  mi1 = as.numeric(mutual(ts1, lag.max = max.delay, plot = FALSE))
+  mi2 = as.numeric(mutual(ts2, lag.max = max.delay, plot = FALSE))
   # mi = ami(ts1, ts2, 1:max.delay)
   
-  m1 = min(which(mi1==TRUE))
-  m2 = min(which(mi2==TRUE))
-  #m12 = min(mi)
-  #mis = c(m1, m2, m12)
+  m1_peaks = splus2R::peaks(x = -1*mi1, span =  peak.limit)
+  m2_peaks = splus2R::peaks(x = -1*mi2, span =  peak.limit)
+  
+  m1 = min(which(m1_peaks==TRUE))
+  m2 = min(which(m2_peaks==TRUE))
+
   mis = c(m1, m2)
   
   if (typeami == "mindip") {
