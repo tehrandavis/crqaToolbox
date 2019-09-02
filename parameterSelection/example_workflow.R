@@ -33,8 +33,8 @@ recpt = FALSE
 max.embed = 10
 max.delay = 60
 steps = seq(1, 6, 1)
-radiusspan = 200 
-radiussample = 80
+radiusspan = 100 
+radiussample = 10
 fnnpercent = 10
 typeami = "mindip"
 
